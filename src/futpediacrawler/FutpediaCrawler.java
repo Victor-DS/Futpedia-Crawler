@@ -1,9 +1,34 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * The MIT License
+ *
+ * Copyright 2017 Victor Santiago.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package futpediacrawler;
+
+import futpediacrawler.model.crawler.Futpedia;
+import futpediacrawler.model.exceptions.PageNotFoundException;
+import futpediacrawler.model.jsonmodel.Resultado;
+import futpediacrawler.model.jsonmodel.Campeo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,7 +40,20 @@ public class FutpediaCrawler {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Futpedia fp = new Futpedia();
+        
+        Resultado brs = new Resultado();
+        try {
+            brs = fp.getBrasileiroUnificado();
+        } catch (PageNotFoundException ex) {
+            Logger.getLogger(FutpediaCrawler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(FutpediaCrawler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println("Lista de campeões: (Partindo do mais recente)");
+        for(Campeo c : brs.getCampeoes())
+            System.out.println(c.getNomePopular());
     }
     
 }

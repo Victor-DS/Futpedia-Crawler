@@ -21,28 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package futpediacrawler.model;
+package futpediacrawler.model.crawler;
+
+import futpediacrawler.model.jsonmodel.Resultado;
 
 /**
  *
  * @author Victor Santiago
  */
-public class Time {
+public interface Crawler {
     
-    private String nome;
+    public Resultado getBrasileiroUnificado() throws Exception;
+    
+    public Resultado getCampeonatoCarioca() throws Exception;
+    
+    public Resultado getCampeonatoPaulista() throws Exception;
+    
+    public Resultado getCopaAmerica() throws Exception;
+    
+    public Resultado getCopaDasConfederacoes() throws Exception;
+    
+    public Resultado getCopaDoBrasil() throws Exception;
+    
+    public Resultado getCopaDoMundo() throws Exception;
+    
+    public Resultado getMundialDeClubes() throws Exception;
+    
+    public Resultado getLibertadores() throws Exception;
 
-    public Time() {
-    }
-
-    public Time(String nome) {
-        this.nome = nome;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public Resultado getTorneioRioSaoPaulo() throws Exception;
+    
 }

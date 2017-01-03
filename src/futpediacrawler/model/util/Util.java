@@ -21,31 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package futpediacrawler.model;
+package futpediacrawler.model.util;
 
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 /**
  *
  * @author Victor Santiago
  */
-public class CampeonatoBrasileiro {
+public class Util {
     
-    ArrayList<Campeonato> campeonatos;
-
-    public CampeonatoBrasileiro(ArrayList<Campeonato> campeonatos) {
-        this.campeonatos = campeonatos;
-    }
-
-    public CampeonatoBrasileiro() {
-    }
-
-    public ArrayList<Campeonato> getCampeonatos() {
-        return campeonatos;
-    }
-
-    public void setCampeonatos(ArrayList<Campeonato> campeonatos) {
-        this.campeonatos = campeonatos;
+    public static String getHTML(URL url) throws IOException {
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(url.openStream()));
+        
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        
+        while((line = in.readLine()) != null){
+            sb.append(line);
+        }
+        
+        return sb.toString();
     }
     
 }
