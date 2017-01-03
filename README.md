@@ -1,5 +1,40 @@
 # Futpedia-Scrapper
-Scrapper para obter dados da Futpedia
+Scrapper para obter dados da Futpédia
+
+## O quê é isto?
+Um Web Scrapper, em Java, para obter dados da Futpédia.
+Em outras palavras, ele abre uma conexão com o site da Futpédia, e varre o HTML em busca dos dados, e te retorna um POJO **puro** (isso quer dizer que alguns dados podem não estar ordenados ou separados, por exemplo, um objeto possui uma ID que referencia uma lista de times em um ``Map``).
+
+## Como usar?
+Basta criar um instância do Objeto ``Futpedia``, e chamar o método para obter uma lista de campeonatos, ou algum campeonato específico.
+Por exemplo, para obter uma lista de todos os campeonatos brasileiros:
+```java
+Futpedia fp = new Futpedia();
+ResultadoListaCampeonatos brs;
+try {
+  brs = fp.getBrasileiroUnificado();
+} catch (PageNotFoundException ex) {
+  //Caso a página do Futpédia não tenha sido encontrada...
+} catch (Exception ex) {
+  //Outras Expetions, como IOException, etc...
+}
+```
+
+Para imprimir uma lista dos campeões, do mais recente para o mais antigo:
+```java
+for(Campeo c : brs.getCampeoes())
+  System.out.println(c.getNomePopular());
+```
+
+## Que tipo de dados retorna?
+- Todas as edições de cada campeonato;
+- Jogos para cada uma das edições, e também os times que participaram dela;
+- Informações gerais de um time específico;
+
+Dentre outros dados!
+
+## Dependências
+A única lib que você vai precisar para rodar é o **Gson**. Alguns dos dados vem do *Javascript* do HTML, então ele é necessário para fazer o parse da string de objetos que estão presentes no *HTML*.
 
 ## LICENSE
 ```
