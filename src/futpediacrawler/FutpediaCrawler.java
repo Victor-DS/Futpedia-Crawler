@@ -25,8 +25,9 @@ package futpediacrawler;
 
 import futpediacrawler.model.crawler.Futpedia;
 import futpediacrawler.model.exceptions.PageNotFoundException;
-import futpediacrawler.model.jsonmodel.Resultado;
-import futpediacrawler.model.jsonmodel.Campeo;
+import futpediacrawler.model.wrappers.ResultadoListaCampeonatos;
+import futpediacrawler.model.jsonmodel.listacampeonatos.Campeao;
+import futpediacrawler.model.wrappers.ResultadoCampeonato;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,18 +43,18 @@ public class FutpediaCrawler {
     public static void main(String[] args) {
         Futpedia fp = new Futpedia();
         
-        Resultado brs = new Resultado();
+        ResultadoCampeonato rc = new ResultadoCampeonato();
         try {
-            brs = fp.getBrasileiroUnificado();
+            rc = fp.getDetalhesCampeonato("http://futpedia.globo.com/campeonato/campeonato-brasileiro/2016");
         } catch (PageNotFoundException ex) {
             Logger.getLogger(FutpediaCrawler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(FutpediaCrawler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        System.out.println("Lista de campeões: (Partindo do mais recente)");
-        for(Campeo c : brs.getCampeoes())
-            System.out.println(c.getNomePopular());
+                
+        System.out.println("Lista de equipes:");
+        for(String s: rc.getEquipes().keySet())
+            System.out.println("Key: " + s + " / " + rc.getEquipe(s).getNomePopular());
     }
     
 }
