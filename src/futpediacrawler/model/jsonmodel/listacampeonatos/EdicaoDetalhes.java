@@ -152,11 +152,16 @@ public class EdicaoDetalhes implements Serializable
     
     private final String URL_BASE = "http://futpedia.globo.com/campeonato/";
     public String getURL() {
-        StringBuilder sb = new StringBuilder(slug);
-        int lastHyphenIndex = slug.lastIndexOf("-");
-        sb.replace(lastHyphenIndex, lastHyphenIndex+1, "/");
+        String league = "";
+        if(getNome().startsWith("Torneio Roberto Gomes Pedrosa"))
+            league = "torneio-roberto-gomes-pedrosa";
+        else if(getNome().startsWith("Taça Brasil"))
+            league = "taca-brasil";
+        else
+            league = "campeonato-brasileiro";
+        //TODO Adicionar campeonatos regionais
         
-        return URL_BASE + sb.toString();
+        return URL_BASE + league + getSlugEditorial();
     }
 
 }
