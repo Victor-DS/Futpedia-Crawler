@@ -165,9 +165,7 @@ public class Futpedia implements Crawler{
             throw new Exception("Dados não encontrados, HTML: " + html);
         
         json = fixCampeonatoString(json);
-        
-        System.out.println(json);
-                
+                        
         Gson gson = new Gson();
         return gson.fromJson(json.trim(), ResultadoCampeonato.class);
     }
