@@ -161,7 +161,7 @@ public class EdicaoDetalhes implements Serializable
             league = "campeonato-brasileiro";
         //TODO Adicionar campeonatos regionais
         
-        return URL_BASE + league + getSlugEditorial();
+        return URL_BASE + league + "/" + getSlugEditorial();
     }
 
 }
