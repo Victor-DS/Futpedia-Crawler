@@ -25,8 +25,9 @@ package futpediacrawler.model.crawler;
 
 import com.google.gson.Gson;
 import futpediacrawler.model.exceptions.PageNotFoundException;
-import futpediacrawler.model.jsonmodel.Resultado;
+import futpediacrawler.model.wrappers.ResultadoListaCampeonatos;
 import futpediacrawler.model.util.Util;
+import futpediacrawler.model.wrappers.ResultadoCampeonato;
 import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;
@@ -37,6 +38,10 @@ import java.util.regex.Pattern;
  * @author Victor Santiago
  */
 public class Futpedia implements Crawler{
+    
+    private final int LISTA_CAMPEONATOS = 0;
+    private final int CAMPEONATO = 1;
+    private final int TIME = 2;
     
     private final String BASE_CAMPEONATO = "http://futpedia.globo.com/campeonato/";
     
@@ -63,57 +68,62 @@ public class Futpedia implements Crawler{
     public Futpedia() {}
 
     @Override
-    public Resultado getBrasileiroUnificado() 
+    public ResultadoListaCampeonatos getBrasileiroUnificado() 
             throws IOException, PageNotFoundException, Exception {
-        return getCampeonatoResultado(BRASILEIROS);
+        return getListaDeCampeonatosResultado(BRASILEIROS);
     }
 
     @Override
-    public Resultado getCampeonatoCarioca() throws Exception {
-        return getCampeonatoResultado(CARIOCA);
+    public ResultadoListaCampeonatos getCampeonatoCarioca() throws Exception {
+        return getListaDeCampeonatosResultado(CARIOCA);
     }
 
     @Override
-    public Resultado getCampeonatoPaulista() throws Exception {
-        return getCampeonatoResultado(PAULISTA);
+    public ResultadoListaCampeonatos getCampeonatoPaulista() throws Exception {
+        return getListaDeCampeonatosResultado(PAULISTA);
     }
 
     @Override
-    public Resultado getCopaAmerica() throws Exception {
-        return getCampeonatoResultado(COPA_AMERICA);
+    public ResultadoListaCampeonatos getCopaAmerica() throws Exception {
+        return getListaDeCampeonatosResultado(COPA_AMERICA);
     }
 
     @Override
-    public Resultado getCopaDasConfederacoes() throws Exception {
-        return getCampeonatoResultado(CONFEDERACOES);
+    public ResultadoListaCampeonatos getCopaDasConfederacoes() throws Exception {
+        return getListaDeCampeonatosResultado(CONFEDERACOES);
     }
 
     @Override
-    public Resultado getCopaDoBrasil() throws Exception {
-        return getCampeonatoResultado(COPA_BRASIL);
+    public ResultadoListaCampeonatos getCopaDoBrasil() throws Exception {
+        return getListaDeCampeonatosResultado(COPA_BRASIL);
     }
 
     @Override
-    public Resultado getCopaDoMundo() throws Exception {
-        return getCampeonatoResultado(COPA_MUNDO);
+    public ResultadoListaCampeonatos getCopaDoMundo() throws Exception {
+        return getListaDeCampeonatosResultado(COPA_MUNDO);
     }
 
     @Override
-    public Resultado getMundialDeClubes() throws Exception {
-        return getCampeonatoResultado(MUNDIAL_CLUBES);
+    public ResultadoListaCampeonatos getMundialDeClubes() throws Exception {
+        return getListaDeCampeonatosResultado(MUNDIAL_CLUBES);
     }
 
     @Override
-    public Resultado getLibertadores() throws Exception {
-        return getCampeonatoResultado(LIBERTADORES);
+    public ResultadoListaCampeonatos getLibertadores() throws Exception {
+        return getListaDeCampeonatosResultado(LIBERTADORES);
     }
 
     @Override
-    public Resultado getTorneioRioSaoPaulo() throws Exception {
-        return getCampeonatoResultado(RIO_SAO_PAULO);
+    public ResultadoListaCampeonatos getTorneioRioSaoPaulo() throws Exception {
+        return getListaDeCampeonatosResultado(RIO_SAO_PAULO);
+    }
+    
+    @Override
+    public ResultadoCampeonato getDetalhesCampeonato(String url) throws Exception {
+        return getCampeonatoResultado(url);
     }
         
-    private Resultado getCampeonatoResultado(String link)
+    private ResultadoListaCampeonatos getListaDeCampeonatosResultado(String link)
         throws IOException, PageNotFoundException, Exception {
         String html = Util.getHTML(new URL(link));
         
@@ -130,10 +140,42 @@ public class Futpedia implements Crawler{
         
         if(json == null)
             throw new Exception("Dados não encontrados, HTML: " + html);
-        
+                
         Gson gson = new Gson();
                 
-        return gson.fromJson(json.trim(), Resultado.class);
+        return gson.fromJson(json.trim(), ResultadoListaCampeonatos.class);
     }
-
+    
+    private ResultadoCampeonato getCampeonatoResultado(String link) 
+            throws IOException, PageNotFoundException, Exception {
+        String html = Util.getHTML(new URL(link));
+        
+        if(html.contains("Globo.com - Desculpe-nos, página não encontrada"))
+            throw new PageNotFoundException("Página não encontrada: " 
+                    + link);
+        
+        Pattern p = Pattern.compile("RESUMO_EDICAO = (.*?);");
+        Matcher m = p.matcher(html);
+        
+        String json = null;
+        if(m.find())
+            json = m.group(1);
+        
+        if(json == null)
+            throw new Exception("Dados não encontrados, HTML: " + html);
+        
+        json = fixCampeonatoString(json);
+        
+        System.out.println(json);
+                
+        Gson gson = new Gson();
+        return gson.fromJson(json.trim(), ResultadoCampeonato.class);
+    }
+    
+    private String fixCampeonatoString(String s) {
+        return s.replace("JOGOS:", "\"jogos\":")
+                .replace("EQUIPES:", "\"equipes\":")
+                .replace("SEDES:", "\"sedes\":")
+                .replace("FASES:", "\"fases\":");
+    }
 }

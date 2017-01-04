@@ -23,7 +23,8 @@
  */
 package futpediacrawler.model.crawler;
 
-import futpediacrawler.model.jsonmodel.Resultado;
+import futpediacrawler.model.wrappers.ResultadoCampeonato;
+import futpediacrawler.model.wrappers.ResultadoListaCampeonatos;
 
 /**
  *
@@ -31,24 +32,26 @@ import futpediacrawler.model.jsonmodel.Resultado;
  */
 public interface Crawler {
     
-    public Resultado getBrasileiroUnificado() throws Exception;
+    public ResultadoListaCampeonatos getBrasileiroUnificado() throws Exception;
     
-    public Resultado getCampeonatoCarioca() throws Exception;
+    public ResultadoListaCampeonatos getCampeonatoCarioca() throws Exception;
     
-    public Resultado getCampeonatoPaulista() throws Exception;
+    public ResultadoListaCampeonatos getCampeonatoPaulista() throws Exception;
     
-    public Resultado getCopaAmerica() throws Exception;
+    public ResultadoListaCampeonatos getCopaAmerica() throws Exception;
     
-    public Resultado getCopaDasConfederacoes() throws Exception;
+    public ResultadoListaCampeonatos getCopaDasConfederacoes() throws Exception;
     
-    public Resultado getCopaDoBrasil() throws Exception;
+    public ResultadoListaCampeonatos getCopaDoBrasil() throws Exception;
     
-    public Resultado getCopaDoMundo() throws Exception;
+    public ResultadoListaCampeonatos getCopaDoMundo() throws Exception;
     
-    public Resultado getMundialDeClubes() throws Exception;
+    public ResultadoListaCampeonatos getMundialDeClubes() throws Exception;
     
-    public Resultado getLibertadores() throws Exception;
+    public ResultadoListaCampeonatos getLibertadores() throws Exception;
 
-    public Resultado getTorneioRioSaoPaulo() throws Exception;
+    public ResultadoListaCampeonatos getTorneioRioSaoPaulo() throws Exception;
+    
+    public ResultadoCampeonato getDetalhesCampeonato(String url) throws Exception;
     
 }
