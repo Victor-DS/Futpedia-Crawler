@@ -149,5 +149,14 @@ public class EdicaoDetalhes implements Serializable
         this.slug = slug;
         return this;
     }
+    
+    private final String URL_BASE = "http://futpedia.globo.com/campeonato/";
+    public String getURL() {
+        StringBuilder sb = new StringBuilder(slug);
+        int lastHyphenIndex = slug.lastIndexOf("-");
+        sb.replace(lastHyphenIndex, lastHyphenIndex+1, "/");
+        
+        return URL_BASE + sb.toString();
+    }
 
 }
