@@ -43,9 +43,11 @@ public class FutpediaCrawler {
     public static void main(String[] args) {
         Futpedia fp = new Futpedia();
         
+        ResultadoListaCampeonatos rlc = new ResultadoListaCampeonatos();
         ResultadoCampeonato rc = new ResultadoCampeonato();
         try {
-            rc = fp.getDetalhesCampeonato("http://futpedia.globo.com/campeonato/campeonato-brasileiro/2016");
+            rlc = fp.getBrasileiroUnificado();
+            rc = fp.getDetalhesCampeonato(rlc.getEdicoes().get(0).getDetalhes().getURL());
         } catch (PageNotFoundException ex) {
             Logger.getLogger(FutpediaCrawler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
