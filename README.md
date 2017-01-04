@@ -26,6 +26,22 @@ for(Campeo c : brs.getCampeoes())
   System.out.println(c.getNomePopular());
 ```
 
+Para obter a lista de times de um campeonato específico:
+```java
+ResultadoCampeonato rc = new ResultadoCampeonato();
+try {
+  rc = fp.getDetalhesCampeonato("http://futpedia.globo.com/campeonato/campeonato-brasileiro/2016");
+} catch (PageNotFoundException ex) {
+  //Caso a página do Futpédia não tenha sido encontrada...
+} catch (Exception ex) {
+  //Outras Expetions, como IOException, etc...
+}
+                
+System.out.println("Lista de equipes:");
+for(String s: rc.getEquipes().keySet())
+  System.out.println("Key: " + s + " / " + rc.getEquipe(s).getNomePopular());
+```
+
 ## Que tipo de dados retorna?
 - Todas as edições de cada campeonato;
 - Jogos para cada uma das edições, e também os times que participaram dela;
