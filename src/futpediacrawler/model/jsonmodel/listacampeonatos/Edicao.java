@@ -50,15 +50,15 @@ public class Edicao implements Serializable
         this.jogos = jogos;
     }
 
-    public EdicaoDetalhes getEdicao() {
+    public EdicaoDetalhes getDetalhes() {
         return edicao;
     }
 
-    public void setEdicao(EdicaoDetalhes edicao) {
+    public void setDetalhes(EdicaoDetalhes edicao) {
         this.edicao = edicao;
     }
 
-    public Edicao withEdicao(EdicaoDetalhes edicao) {
+    public Edicao withDetalhes(EdicaoDetalhes edicao) {
         this.edicao = edicao;
         return this;
     }
