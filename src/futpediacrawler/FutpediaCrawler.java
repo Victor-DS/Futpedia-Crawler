@@ -23,11 +23,11 @@
  */
 package futpediacrawler;
 
+import com.google.gson.Gson;
 import futpediacrawler.model.crawler.Futpedia;
 import futpediacrawler.model.exceptions.PageNotFoundException;
-import futpediacrawler.model.wrappers.ResultadoListaCampeonatos;
-import futpediacrawler.model.jsonmodel.listacampeonatos.Campeao;
-import futpediacrawler.model.wrappers.ResultadoCampeonato;
+import futpediacrawler.model.wrappers.CampeonatoSimples;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,20 +43,6 @@ public class FutpediaCrawler {
     public static void main(String[] args) {
         Futpedia fp = new Futpedia();
         
-        ResultadoListaCampeonatos rlc = new ResultadoListaCampeonatos();
-        ResultadoCampeonato rc = new ResultadoCampeonato();
-        try {
-            rlc = fp.getBrasileiroUnificado();
-            rc = fp.getDetalhesCampeonato(rlc.getEdicoes().get(0).getDetalhes().getURL());
-        } catch (PageNotFoundException ex) {
-            Logger.getLogger(FutpediaCrawler.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(FutpediaCrawler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                
-        System.out.println("Lista de equipes:");
-        for(String s: rc.getEquipes().keySet())
-            System.out.println("Key: " + s + " / " + rc.getEquipe(s).getNomePopular());
-    }
+    }        
     
 }
