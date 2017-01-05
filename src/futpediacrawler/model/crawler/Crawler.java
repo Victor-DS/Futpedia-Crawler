@@ -23,6 +23,7 @@
  */
 package futpediacrawler.model.crawler;
 
+import futpediacrawler.model.wrappers.CampeonatoSimples;
 import futpediacrawler.model.wrappers.ResultadoCampeonato;
 import futpediacrawler.model.wrappers.ResultadoListaCampeonatos;
 
@@ -33,6 +34,8 @@ import futpediacrawler.model.wrappers.ResultadoListaCampeonatos;
 public interface Crawler {
     
     public ResultadoListaCampeonatos getBrasileiroUnificado() throws Exception;
+    
+    public ResultadoListaCampeonatos getBrasileiroModerno() throws Exception;
     
     public ResultadoListaCampeonatos getCampeonatoCarioca() throws Exception;
     
@@ -52,6 +55,6 @@ public interface Crawler {
 
     public ResultadoListaCampeonatos getTorneioRioSaoPaulo() throws Exception;
     
-    public ResultadoCampeonato getDetalhesCampeonato(String url) throws Exception;
+    public CampeonatoSimples getDetalhesCampeonato(String url) throws Exception;
     
 }
