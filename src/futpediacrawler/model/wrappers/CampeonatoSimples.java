@@ -89,4 +89,8 @@ public class CampeonatoSimples {
     public void setPartidas(List<Partida> partidas) {
         this.partidas = partidas;
     }
+    
+    public void addPartida(Partida p) {
+        this.partidas.add(p);
+    }
 }

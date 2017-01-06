@@ -74,7 +74,7 @@ public class Futpedia implements Crawler{
     @Override
     public ResultadoListaCampeonatos getBrasileiroModerno() 
             throws Exception {
-        return Parser.getListaDeCampeonatosResultado(BRASILEIROS);
+        return Parser.getListaDeCampeonatosResultado(BRASILEIRO_MODERNO);
     }
 
     @Override
