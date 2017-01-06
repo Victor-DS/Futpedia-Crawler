@@ -74,31 +74,7 @@ public class Parser {
                 
         return gson.fromJson(json.trim(), ResultadoListaCampeonatos.class);
     }
-    
-    public static ResultadoCampeonato getCampeonatoResultado(String link) 
-            throws IOException, PageNotFoundException, Exception {
-        String html = Util.getHTML(new URL(link));
         
-        if(html.contains("Globo.com - Desculpe-nos, página não encontrada"))
-            throw new PageNotFoundException("Página não encontrada: " 
-                    + link);
-        
-        Pattern p = Pattern.compile("RESUMO_EDICAO = (.*?);");
-        Matcher m = p.matcher(html);
-        
-        String json = null;
-        if(m.find())
-            json = m.group(1);
-        
-        if(json == null)
-            throw new IllegalArgumentException("Dados não encontrados, HTML: " + html);
-        
-        json = fixCampeonatoString(json);
-                        
-        Gson gson = new Gson();
-        return gson.fromJson(json.trim(), ResultadoCampeonato.class);
-    }
-    
     public static String fixCampeonatoString(String s) {
         return s.replace("JOGOS:", "\"jogos\":")
                 .replace("EQUIPES:", "\"equipes\":")
@@ -116,7 +92,8 @@ public class Parser {
 
         try {
             ResultadoCampeonato rc = getRawCampeonato(html);
-            return Conversor.toCampeonatoSimples(rc);
+            return Conversor.toCampeonatoSimples(rc, 
+                    getCampeonatoSimplesSemPartidas(html));
         } catch(IllegalArgumentException e) {
             System.out.println("Não encontrou Javascript... Puxando do HTML...");
         }
@@ -144,6 +121,13 @@ public class Parser {
     
     public static CampeonatoSimples manualHTMLParser(String HTML) 
             throws PageNotFoundException {
+        CampeonatoSimples cs = getCampeonatoSimplesSemPartidas(HTML);
+        cs.setPartidas(getPartidas(HTML));
+        return cs;
+    }
+    
+    private static CampeonatoSimples getCampeonatoSimplesSemPartidas(String HTML) 
+            throws PageNotFoundException {
         if(HTML.contains("Globo.com - Desculpe-nos, página não encontrada"))
             throw new PageNotFoundException("Página não encontrada");
         
@@ -166,8 +150,6 @@ public class Parser {
             cs.setAno(Integer.parseInt(m.group(0)));
         else
             System.out.println("Não achou o ano! String: " + title);
-        
-        cs.setPartidas(getPartidas(HTML));
         
         return cs;
     }
