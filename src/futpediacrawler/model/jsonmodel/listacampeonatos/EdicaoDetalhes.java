@@ -157,11 +157,20 @@ public class EdicaoDetalhes implements Serializable
             league = "torneio-roberto-gomes-pedrosa";
         else if(getNome().startsWith("Taça Brasil"))
             league = "taca-brasil";
-        else
+        else if (getNome().startsWith("Campeonato Brasileiro"))
             league = "campeonato-brasileiro";
-        //TODO Adicionar campeonatos regionais
+        else
+            return getURLOutros();
         
         return URL_BASE + league + "/" + getSlugEditorial();
+    }
+    
+    private String getURLOutros() {
+        StringBuilder sb = new StringBuilder(slug);
+        int lastHyphenIndex = slug.lastIndexOf("-");
+        sb.replace(lastHyphenIndex, lastHyphenIndex+1, "/");  
+        
+        return URL_BASE + sb.toString();
     }
 
 }
