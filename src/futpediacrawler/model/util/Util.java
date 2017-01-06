@@ -23,10 +23,13 @@
  */
 package futpediacrawler.model.util;
 
+import futpediacrawler.model.exceptions.PageNotFoundException;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  *
@@ -35,8 +38,13 @@ import java.net.URL;
 public class Util {
     
     public static String getHTML(URL url) throws IOException {
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 "
+                + "(Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                + "(KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36");
+        
         BufferedReader in = new BufferedReader(
-                new InputStreamReader(url.openStream()));
+                new InputStreamReader(urlConnection.getInputStream()));
         
         StringBuilder sb = new StringBuilder();
         String line = null;
