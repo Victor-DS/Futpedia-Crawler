@@ -23,8 +23,13 @@
  */
 package futpediacrawler.model.util;
 
+import futpediacrawler.model.jsonmodel.campeonato.Jogo;
+import futpediacrawler.model.simplificado.Partida;
 import futpediacrawler.model.wrappers.CampeonatoSimples;
 import futpediacrawler.model.wrappers.ResultadoCampeonato;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Alguns dados entre campeonatos vem em formatos diferentes, então
@@ -34,8 +39,30 @@ import futpediacrawler.model.wrappers.ResultadoCampeonato;
  */
 public class Conversor {
     
-    public static CampeonatoSimples toCampeonatoSimples(ResultadoCampeonato rCampeonato) {
-        return new CampeonatoSimples(); //TODO
+    public static CampeonatoSimples toCampeonatoSimples(
+            ResultadoCampeonato rCampeonato, CampeonatoSimples cs) {        
+        Partida currentPartida;
+        for(Jogo jogo : rCampeonato.getJogos()) {
+            currentPartida = new Partida();
+            
+            currentPartida.setCasa(rCampeonato.getEquipe(
+                    jogo.getMand()+"").getNomePopular());
+            currentPartida.setVisitante(rCampeonato.getEquipe(
+                    jogo.getVis()+"").getNomePopular());
+            
+            currentPartida.setGolsCasa((int) jogo.getGolm());
+            currentPartida.setGolsVisitante((int) jogo.getGolv());
+            
+            try {
+                currentPartida.setData(jogo.getDt());
+            } catch (ParseException ex) {
+                Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            cs.addPartida(currentPartida);
+        }
+        
+        return cs;
     }
 
 }
