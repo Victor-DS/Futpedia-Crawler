@@ -23,11 +23,9 @@
  */
 package futpediacrawler;
 
-import com.google.gson.Gson;
 import futpediacrawler.model.crawler.Futpedia;
-import futpediacrawler.model.exceptions.PageNotFoundException;
-import futpediacrawler.model.wrappers.CampeonatoSimples;
-import java.io.IOException;
+import futpediacrawler.model.jsonmodel.listacampeonatos.Campeao;
+import futpediacrawler.model.wrappers.ResultadoListaCampeonatos;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,6 +41,15 @@ public class FutpediaCrawler {
     public static void main(String[] args) {
         Futpedia fp = new Futpedia();
         
+        try {
+            ResultadoListaCampeonatos rlc = fp.getBrasileiroModerno();
+            
+            //Imprimindo campeões...
+            for(Campeao c : rlc.getCampeoes())
+                System.out.println(c.getNome());
+        } catch (Exception ex) {
+            Logger.getLogger(FutpediaCrawler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }        
     
 }
