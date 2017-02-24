@@ -54,7 +54,7 @@ Dentre outros dados!
 
 ## Dependências
 Para executar este projeto, você vai precisar de duas Libs:
-- **Gson** para obter os dados que vêm do JavaScript;
+- **Gson** para obter os dados que vem do JavaScript;
 - **Jsoup** para obter os dados diretamente das TAGs HTML;
 
 ## LICENSE
