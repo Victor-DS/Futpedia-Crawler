@@ -45,6 +45,10 @@ public class Futpedia implements Crawler{
     
     private final String BRASILEIRO_MODERNO = BASE_CAMPEONATO + "campeonato-brasileiro";
     
+    private final String TACA_BRASIL = BASE_CAMPEONATO + "taca-brasil";
+    
+    private final String TORNEIO_ROBERTO = BASE_CAMPEONATO + "torneio-roberto-gomes-pedrosa";
+    
     private final String CARIOCA = BASE_CAMPEONATO + "campeonato-carioca";
     
     private final String PAULISTA = BASE_CAMPEONATO + "campeonato-paulista";
@@ -126,4 +130,14 @@ public class Futpedia implements Crawler{
     public CampeonatoSimples getDetalhesCampeonato(String url) throws Exception {
         return Parser.getCampeonatoSimplificado(url);
     }    
+
+    @Override
+    public ResultadoListaCampeonatos getTacaBrasil() throws Exception {
+        return Parser.getListaDeCampeonatosResultado(TACA_BRASIL);
+    }
+
+    @Override
+    public ResultadoListaCampeonatos getTorneioRobertoGomesPedrosa() throws Exception {
+        return Parser.getListaDeCampeonatosResultado(TORNEIO_ROBERTO);
+    }
 }

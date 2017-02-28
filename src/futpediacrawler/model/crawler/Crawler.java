@@ -37,6 +37,10 @@ public interface Crawler {
     
     public ResultadoListaCampeonatos getBrasileiroModerno() throws Exception;
     
+    public ResultadoListaCampeonatos getTacaBrasil() throws Exception;
+    
+    public ResultadoListaCampeonatos getTorneioRobertoGomesPedrosa() throws Exception;
+    
     public ResultadoListaCampeonatos getCampeonatoCarioca() throws Exception;
     
     public ResultadoListaCampeonatos getCampeonatoPaulista() throws Exception;
