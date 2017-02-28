@@ -170,7 +170,7 @@ public class EdicaoDetalhes implements Serializable
         int lastHyphenIndex = slug.lastIndexOf("-");
         sb.replace(lastHyphenIndex, lastHyphenIndex+1, "/");  
         
-        return URL_BASE + sb.toString();
+        return URL_BASE + sb.toString().toLowerCase();
     }
 
 }
