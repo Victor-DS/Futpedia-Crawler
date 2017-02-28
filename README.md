@@ -3,7 +3,14 @@ Scrapper para obter dados da Futpédia
 
 ## O quê é isto?
 Um Web Scrapper, em Java, para obter dados da Futpédia.
-Em outras palavras, ele abre uma conexão com o site da Futpédia, e varre o HTML em busca dos dados, e te retorna um POJO **puro** (isso quer dizer que alguns dados podem não estar ordenados ou separados, por exemplo, um objeto possui uma ID que referencia uma lista de times em um ``Map``).
+
+Em outras palavras, ele abre uma conexão com o site da Futpédia, e varre o HTML em busca dos dados, e te retorna um POJO com os dados.
+
+A lista de Campeonatos vem **puro**, ou seja, vem todos os dados e eles não são tratados. Recomendo verificar as classes no respectivo pacote para verificar exatamente os dados que você vai precisar...
+
+Já os detalhes de um campeonato específico, em algumas situações vem do Javascript, enquanto que em outras do HTML, então os dados são tratados para unificar e simplificar.
+
+Se você quiser puxar os dados puros, está implementado, mas não são todos os campeonatos que vão suportar.
 
 ## Como usar?
 Basta criar um instância do Objeto ``Futpedia``, e chamar o método para obter uma lista de campeonatos, ou algum campeonato específico.
@@ -13,10 +20,8 @@ Futpedia fp = new Futpedia();
 ResultadoListaCampeonatos brs;
 try {
   brs = fp.getBrasileiroUnificado();
-} catch (PageNotFoundException ex) {
-  //Caso a página do Futpédia não tenha sido encontrada...
 } catch (Exception ex) {
-  //Outras Expetions, como IOException, etc...
+  //Exceptions: IOException, FileNotFoundException, etc...
 }
 ```
 
@@ -28,29 +33,29 @@ for(Campeo c : brs.getCampeoes())
 
 Para obter a lista de times de um campeonato específico:
 ```java
-ResultadoCampeonato rc = new ResultadoCampeonato();
+CampeonatoSimples cs;
 try {
-  rc = fp.getDetalhesCampeonato("http://futpedia.globo.com/campeonato/campeonato-brasileiro/2016");
-} catch (PageNotFoundException ex) {
-  //Caso a página do Futpédia não tenha sido encontrada...
+  cs = fp.getDetalhesCampeonato("http://futpedia.globo.com/campeonato/campeonato-brasileiro/2016"); //Você também pode pegar a URL dentro do "ResultadoListaCampeonatos" no objeto "EdicaoDetalhes".
 } catch (Exception ex) {
-  //Outras Expetions, como IOException, etc...
+  //Exceptions: IOException, FileNotFoundException, etc...
 }
                 
 System.out.println("Lista de equipes:");
-for(String s: rc.getEquipes().keySet())
+for(String s: cs.getEquipes().keySet())
   System.out.println("Key: " + s + " / " + rc.getEquipe(s).getNomePopular());
 ```
 
 ## Que tipo de dados retorna?
 - Todas as edições de cada campeonato;
 - Jogos para cada uma das edições, e também os times que participaram dela;
-- Informações gerais de um time específico;
+- Resultados de partidas;
 
 Dentre outros dados!
 
 ## Dependências
-A única lib que você vai precisar para rodar é o **Gson**. Alguns dos dados vem do *Javascript* do HTML, então ele é necessário para fazer o parse da string de objetos que estão presentes no *HTML*.
+Para executar este projeto, você vai precisar de duas Libs:
+- **Gson** para obter os dados que vem do JavaScript;
+- **Jsoup** para obter os dados diretamente das TAGs HTML;
 
 ## LICENSE
 ```
