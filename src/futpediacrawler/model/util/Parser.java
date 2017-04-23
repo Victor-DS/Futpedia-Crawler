@@ -177,11 +177,23 @@ public class Parser {
             
             String placarCasa = timePlacar.select("div.placar").first()
                     .select("span.mandante.font-face").first().text();
-            currentJogo.setGolsCasa(Integer.parseInt(placarCasa));
+            int placarCasaInt = 0;
+            try {
+                placarCasaInt = Integer.parseInt(placarCasa);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+            currentJogo.setGolsCasa(placarCasaInt);
             
             String placarVisitante = timePlacar.select("div.placar").first()
                     .select("span.visitante.font-face").first().text();
-            currentJogo.setGolsVisitante(Integer.parseInt(placarVisitante));
+            int placarVisitanteInt = 0;
+            try {
+                placarVisitanteInt = Integer.parseInt(placarVisitante);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+            currentJogo.setGolsVisitante(placarVisitanteInt);
                         
             String dia = jogo.getElementsByTag("time").first().attr("datetime");
             
